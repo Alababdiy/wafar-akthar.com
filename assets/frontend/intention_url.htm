@@ -1,0 +1,79 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+
+<body>
+    <style>
+        * {
+            margin: 10px;
+            font-size: 17px;
+        }
+    </style>
+    <center>
+        <input type="hidden" name="email" data-form-email="true"
+            value="wf1n4qNrpf4t1a0OFcrV6KWNrzfurzp0FDtCNKwOIIqJiSP9/sythfMa7Fy+CAHgQqv60umGDjwilLci7ZuzECxCXhvxFQnFItlTXz9cP46EO+YrHJkS6GhXYUqQR+CT.fEZXlSwFbAmnJ1EXi7Mh7UPOqIY95RrmR+qBCsEBWvsoc2XD/zMMYhsx+Ewq96z4MbGkuJMnPN/M/LOyzE4HMe7k5Yp1/kvgiicYWUrTN7k00fWQya/1yPln8sQdOIJK">
+        <div class="dragArea row">
+            <div class="col-md col-sm-12 form-group mb-3" data-for="name">
+                <input type="text" name="name" placeholder="الاسم" data-form-field="name" required="required"
+                    class="form-control display-7" value="" id="name-form5-2">
+            </div>
+            <div class="col-md col-sm-12 form-group mb-3" data-for="phone">
+                <input type="number" name="phone" placeholder="رقم الهاتف" data-form-field="phone" required="required"
+                    class="form-control display-7" value="" id="phone-form5-2">
+            </div>
+            <div data-for="email" class="col-lg-12 col-md-12 col-sm-12 form-group">
+                <input type="email" name="email" placeholder="البريد الإلكتروني" data-form-field="email"
+                    class="form-control display-7" step="1" value="" id="email-form5-2">
+            </div>
+            <div data-for="company_name" class="col-12 form-group mb-3">
+                <input type="text" name="company_name" placeholder="اسم الشركة" data-form-field="company_name"
+                    class="form-control display-7" required="required" value="" id="company_name-form5-2">
+            </div>
+            <div data-for="position" class="col-lg-12 col-md-12 col-sm-12 form-group">
+                <input type="text" name="position" placeholder="الوظيفة" data-form-field="position"
+                    class="form-control display-7" required="required" value="" id="position-form5-2">
+            </div>
+            <div data-for="details" class="col-12 form-group mb-3">
+                <textarea name="details" placeholder="معلومات عن الطلب" data-form-field="details"
+                    class="form-control display-7" id="details-form5-2"></textarea>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn">
+                <button type="submit" class="btn btn-secondary display-4" onclick="create_link()">create link</button>
+            </div>
+        </div>
+
+        <textarea id="output" style="margin: 30px;width: 300px;height: 300px; "></textarea>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </center>
+    <script>
+        const crypt = (salt, text) => {
+            const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
+            const byteHex = (n) => ("0" + Number(n).toString(16)).substr(-2);
+            const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
+
+            return text
+                .split("")
+                .map(textToChars)
+                .map(applySaltToChar)
+                .map(byteHex)
+                .join("");
+        };
+
+        function create_link() {
+            let data = {}
+            document.querySelectorAll('input').forEach((e) => {
+                if (e.name)
+                    data[e.name] = e.value;
+
+            })
+            data = crypt('salt', JSON.stringify(data));
+            document.getElementById('output').value = 'https://form.ratina.io/intention/' + data;
+        }
+
+    </script>
+</body>
+
+</html>
